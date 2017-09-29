@@ -7,7 +7,6 @@
 
 public class Card implements Comparable<Card> {
 
-	// push
 
 	private String suit;
 	private int rank;

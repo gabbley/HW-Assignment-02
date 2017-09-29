@@ -11,8 +11,8 @@ public class Deck {
 	private int topCard;
 	
 	public Deck() {
-		this.deck = deck;
-		this.topCard = topCard;
+		this.deck = new Card[0];
+		topCard = 0;
 	}
 	
 	public Deck(boolean isSorted) {
@@ -31,6 +31,10 @@ public class Deck {
 		return "";
 	}
 	
+	public static boolean equals(Deck d1, Deck d2) {
+		return true;
+	}
+	
 	public static Deck[] deal(int hands, int cardsPerHand) {
 		//TODO if statement, returns null if not enough cards in deck to fill all hands
 	
@@ -38,4 +42,15 @@ public class Deck {
 		return d;
 	}
 	
+	public static Card pick() {
+		return new Card();
+	}
+	
+	public static void selectionSort() {
+		//TODO add selectionSort algorithm
+	}
+	
+	public static void mergeSort() {
+		//TODO add mergeSort algorithm
+	}
 }
