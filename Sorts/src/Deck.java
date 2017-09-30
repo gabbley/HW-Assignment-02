@@ -6,51 +6,76 @@
  * */
 
 public class Deck {
-	
-	private Card[] deck;
+
+	private final static int FULLDECK = 52;
+	private static Card[] deck;
 	private int topCard;
-	
+	private boolean isSorted;
+
 	public Deck() {
-		this.deck = new Card[0];
-		topCard = 0;
+		deck = new Card[FULLDECK];
+		fillDeck();
+		topCard = 1;
 	}
-	
+
 	public Deck(boolean isSorted) {
-		this.deck = deck;
-		this.topCard = topCard;
+		deck = new Card[FULLDECK];
+		fillDeck();
+		this.isSorted = isSorted;
 	}
-	
+
 	public static void shuffle() {
-		//TODO replaces existing deck field with new unsorted deck (same length)
+		// TODO replaces existing deck field with new unsorted deck (same
+		// length)
 	}
-	
-	public static String toString(Card[] c) {
-		/*TODO disp cards in four columns, separated by a tab
-		 * if sorted, each suit shoudl print in its own column
-		 * ranks should be printed as words (Ace of Spades), use switch*/
-		return "";
+
+	public String toString() {
+		/*
+		 * TODO disp cards in four columns, separated by a tab if sorted, each
+		 * suit shoudl print in its own column ranks should be printed as words
+		 * (Ace of Spades), use switch
+		 */
+		String deckStr = "";
+		for (int i = 0; i < deck.length; i++) {
+			deckStr += deck[i] + "\n";
+		}
+
+		return deckStr;
+
 	}
-	
+
 	public static boolean equals(Deck d1, Deck d2) {
 		return true;
 	}
-	
+
 	public static Deck[] deal(int hands, int cardsPerHand) {
-		//TODO if statement, returns null if not enough cards in deck to fill all hands
-	
+		// TODO if statement, returns null if not enough cards in deck to fill
+		// all hands
+
 		Deck[] d = new Deck[hands];
 		return d;
 	}
-	
+
 	public static Card pick() {
-		return new Card();
+		return deck[(int)(Math.random() * FULLDECK)];
 	}
-	
+
 	public static void selectionSort() {
-		//TODO add selectionSort algorithm
+		// TODO add selectionSort algorithm
 	}
-	
+
 	public static void mergeSort() {
-		//TODO add mergeSort algorithm
+		// TODO add mergeSort algorithm
+	}
+
+	public static void fillDeck() {
+		for (int i = 0; i < FULLDECK;) {
+			for (int suit = 0; suit < 4; suit++) {
+				for (int rank = 1; rank <= 13; rank++) {
+					deck[i] = new Card(suit, rank);
+					i++;
+				}
+			}
+		}
 	}
 }

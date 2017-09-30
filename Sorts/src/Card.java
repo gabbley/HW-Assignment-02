@@ -12,8 +12,8 @@ public class Card implements Comparable<Card> {
 	private int rank;
 
 	public Card() {
-		suit = "Spades";
-		rank = 0;
+		suit = "SPADES";
+		rank = 1;
 	}
 
 	public Card(int suit, int rank) {
@@ -44,8 +44,8 @@ public class Card implements Comparable<Card> {
 		return rank;
 	}
 
-	public String toString(Card c) {
-		return c.getRankStr(c.getRank()) + c.getSuit();
+	public String toString() {
+		return getRankStr(this.rank) + " of " + this.suit;
 	}
 
 	public String getRankStr(int rank) {
