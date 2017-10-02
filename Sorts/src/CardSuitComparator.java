@@ -13,7 +13,4 @@ public class CardSuitComparator implements Comparator<Card>{
 		return card1.getSuit().compareTo(card2.getSuit());
 	}
 	
-	public boolean equals() {
-		return true;
-	}
 }

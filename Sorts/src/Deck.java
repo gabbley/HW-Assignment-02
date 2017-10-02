@@ -9,20 +9,23 @@ public class Deck {
 
 	private final static int FULLDECK = 52;
 	private static Card[] deck;
-	private static int topCard;
+	private static int topCard; //cardsInDeck or topIndex or cardLength
 	private static boolean isSorted;
+	private static int deckSize;
 
 	public Deck() {
 		deck = new Card[FULLDECK];
 		fillDeck();
 		topCard = 1;
 		isSorted = true;
+		deckSize = deck.length;
 	}
 
 	public Deck(boolean isSorted) {
 		deck = new Card[FULLDECK];
 		fillDeck();
 		this.isSorted = isSorted;
+		deckSize = deck.length;
 	}
 
 	public static void shuffle() { // based on old Deck.java class from 2015-6
@@ -58,8 +61,18 @@ public class Deck {
 
 	}
 
-	public static boolean equals(Deck d1, Deck d2) {
-		return true;
+	public static boolean equals(Deck other) {
+		boolean result = false;
+		
+		for (int i = 0; i<other.deck.length; i++) {
+			result = (deck[i].equals(other.deck[i]));
+		}
+		
+		return result;
+	}
+	
+	public static Card[] getDeck() {
+		return deck;
 	}
 
 	public static Deck[] deal(int hands, int cardsPerHand) {
@@ -71,7 +84,11 @@ public class Deck {
 	}
 
 	public static Card pick() {
-		return deck[(int) (Math.random() * FULLDECK)];
+		int randPos = (int) (Math.random() * FULLDECK);
+		 (int i = randPos; i<deckSize; i++){
+			int tempIndex = 0; //TODO shift manually lol
+		}
+		return deck[randPos];
 	}
 
 	public static void selectionSort() {
@@ -90,7 +107,6 @@ public class Deck {
 						deck[i] = new Card(suit, rank);
 						i++;
 					}
-				
 			}
 		}
 	}

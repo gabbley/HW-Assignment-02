@@ -145,9 +145,15 @@ public class Card implements Comparable<Card> {
 	}
 
 	@Override
-	public int compareTo(Card o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Card other) {
+		int val = 0;
+		
+		
+		return val;
+	}
+	
+	public boolean equals(Card other) {
+		return (suit.equals(other.getSuit()) && rank == other.getRank());
 	}
 
 }
