@@ -26,8 +26,6 @@ public class Deck {
 	}
 
 	public static void shuffle() { // based on old Deck.java class from 2015-6
-		// TODO replaces existing deck field with new unsorted deck (same
-		// length)
 		
 		Card[] shuffDeck = deck;
 
