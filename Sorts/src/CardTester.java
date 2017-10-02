@@ -7,6 +7,7 @@ public class CardTester {
 //		System.out.println(testCard);
 		
 		Deck testDeck = new Deck();
+		testDeck.shuffle();
 		System.out.println(testDeck);
 		System.out.println(Deck.pick());
 
