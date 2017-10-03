@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*	<p>
  * The Deck class consists mainly of a Card array.<br>
  * This Card array is a deck that can be sorted or shuffled and 
@@ -71,9 +73,9 @@ public class Deck {
 	 */
 	public String toString() {
 		/*
-		 * TODO disp cards in four columns if complete deck (52), separated by a tab if
-		 * sorted, each suit shoudl print in its own column ranks should be printed as
-		 * words (Ace of Spades), use switch
+		 * TODO disp cards in four columns if complete deck (52), separated by a
+		 * tab if sorted, each suit shoudl print in its own column ranks should
+		 * be printed as words (Ace of Spades), use switch
 		 */
 		String deckStr = "";
 		for (int i = 0; i < deck.length; i++) {
@@ -119,22 +121,38 @@ public class Deck {
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
 	public static void selectionSort() {
+		ArrayList<Card> byRank = new ArrayList<Card>();
 
 		int n = deck.length;
 
 		while (n > 1) {
-			int maxPos = 0;
+			int suitMax = 0;
 			for (int suit = 1; suit < n; suit++) {
-				if (deck[suit].getSuitInt() > deck[maxPos].getSuitInt()) {
-					maxPos = suit;
+				if (deck[suit].getSuitInt() > deck[suitMax].getSuitInt()) {
+					suitMax = suit;
 				}
-				Card temp = deck[maxPos];
-				deck[maxPos] = deck[n - 1];
-				temp = deck[n - 1];
+				Card suitTemp = deck[suitMax];
+				deck[suitMax] = deck[n - 1];
+				deck[n - 1] = suitTemp;
+				n--;
+			}
+			
+			
+			int rankMax = 0;
+			n = deck.length;
+			int currentSuit = deck[0].getSuitInt();
+
+			for (int rank = 1; rank < n; rank++) {
+				
+				if (deck[rank].getRank() > deck[rankMax].getRank()) {
+					rankMax = rank;
+				}
+				Card rankTemp = deck[rankMax];
+				deck[rankMax] = deck[n - 1];
+				deck[n - 1] = rankTemp;
 				n--;
 			}
 		}
-		n = deck.length;
 	}
 
 	/**
@@ -157,7 +175,7 @@ public class Deck {
 	}
 
 	public static void merge(Card[] deck, int from, int middle, int to) {
-		//TODO i feel like this is wrong....?????
+		// TODO i feel like this is wrong....?????
 		{
 			Card[] temp = new Card[1];
 			int i = from, j = middle + 1, k = from;

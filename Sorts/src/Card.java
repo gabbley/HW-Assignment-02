@@ -176,11 +176,6 @@ public class Card implements Comparable<Card> {
 	@Override
 	public int compareTo(Card other) { //TODO help me please
 		int diff = 0;
-		if (suit.equals(other.getSuit())){
-			diff += 20;
-		}
-		else
-			diff += -20;
 		
 		diff += rank - other.getRank(); 
 		//if neg, this < other

@@ -7,10 +7,10 @@ public class CardTester {
 //		System.out.println(testCard);
 		
 	Deck testDeck = new Deck();
-//		testDeck.shuffle();
+	testDeck.shuffle();
 		//System.out.println(testDeck);
 		
-//		testDeck.selectionSort();
+		testDeck.selectionSort();
 		System.out.println(testDeck);
 		
 		System.out.println(Deck.pick());
