@@ -137,7 +137,7 @@ public class Card implements Comparable<Card> {
 	 * @param suit as a String
 	 * @return suit as an int
 	 */
-	public int getSuitInt(String suit) {
+	public int getSuitInt() {
 		switch (suit) {
 		case "CLUBS":
 			return 0;
@@ -182,7 +182,10 @@ public class Card implements Comparable<Card> {
 		else
 			diff += -20;
 		
-		diff += rank - other.getRank();
+		diff += rank - other.getRank(); 
+		//if neg, this < other
+		//if 0, equal
+		//if pos, this > other
 		
 		return diff;
 	}

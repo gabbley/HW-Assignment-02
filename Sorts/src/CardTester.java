@@ -6,10 +6,15 @@ public class CardTester {
 //		Card testCard = new Card();
 //		System.out.println(testCard);
 		
-		Deck testDeck = new Deck();
-		testDeck.shuffle();
+	Deck testDeck = new Deck();
+//		testDeck.shuffle();
+		//System.out.println(testDeck);
+		
+//		testDeck.selectionSort();
 		System.out.println(testDeck);
+		
 		System.out.println(Deck.pick());
+		System.out.println(testDeck);
 
 	}
 

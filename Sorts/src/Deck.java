@@ -14,7 +14,7 @@ public class Deck {
 	private static Card[] deck; // deck as a Card array
 	private static int topCard; // keeps track of last index of deck
 	private static boolean sorted; // if deck is sorted or shuffled
-	private static int deckSize; //gets current deckSize
+	private static int deckSize; // gets current deckSize
 
 	public Deck() {
 		deck = new Card[FULLDECK];
@@ -62,18 +62,18 @@ public class Deck {
 		deck = shuffDeck;
 
 	}
-	
+
 	/**
 	 * Overrides toString method to print deck.
 	 *
-	 * @return String of entire deck
-	 * 		If deck is complete, will print out in 4 columns by suit, ordered by rank
+	 * @return String of entire deck If deck is complete, will print out in 4
+	 *         columns by suit, ordered by rank
 	 */
 	public String toString() {
 		/*
-		 * TODO disp cards in four columns if complete deck (52), separated by a
-		 * tab if sorted, each suit shoudl print in its own column ranks should
-		 * be printed as words (Ace of Spades), use switch
+		 * TODO disp cards in four columns if complete deck (52), separated by a tab if
+		 * sorted, each suit shoudl print in its own column ranks should be printed as
+		 * words (Ace of Spades), use switch
 		 */
 		String deckStr = "";
 		for (int i = 0; i < deck.length; i++) {
@@ -82,17 +82,15 @@ public class Deck {
 		return deckStr;
 	}
 
-
 	public static boolean equals(Deck other) {
 		boolean result = false;
-		 	
-		 		for (int i = 0; i<other.deck.length; i++) {
-		 			result = (deck[i].equals(other.deck[i]));
-		 		}
-		 		
-		 		return result;
-	}
 
+		for (int i = 0; i < other.deck.length; i++) {
+			result = (deck[i].equals(other.deck[i]));
+		}
+
+		return result;
+	}
 
 	public static Deck[] deal(int hands, int cardsPerHand) {
 		// TODO if statement, returns null if not enough cards in deck to fill
@@ -108,38 +106,92 @@ public class Deck {
 	 * @return random Card from deck
 	 */
 	public static Card pick() {
-		 	int randPos = (int) (Math.random() * FULLDECK);
-		 		 for (int i = randPos; i<deckSize; i++){
-		 			int tempIndex = 0; //TODO shift manually lol
-		 		}
-		 		return deck[randPos];
+		int randPos = (int) (Math.random() * deckSize);
+		Card randCard = deck[randPos];
+		for (int i = randPos; i <= deckSize; i++) {
+			deck[i] = deck[i++];
+			// TODO shift manually lol
+		}
+		return randCard;
 	}
 
 	/**
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
-	public static void selectionSort(Card[] c) {
-		// TODO add selectionSort algorithm
-		// int n = c.length;
-		// while (n>1){
-		// int maxPos = 0;
-		// for (int i = 1; i<n; i++){
-		// int suitInt = c[i].getSuitInt(c[i].getSuit());
-		// for (int suit = 0; suit < 4; suit++){
-		// if (suitInt > c[maxPos].getSuitInt(c[maxPos].getSuit())){
-		// maxPos = i;
-		// }
-		// Card temp = c[maxPos];
-		// }
-		// }
-		// }
+	public static void selectionSort() {
+
+		int n = deck.length;
+
+		while (n > 1) {
+			int maxPos = 0;
+			for (int suit = 1; suit < n; suit++) {
+				if (deck[suit].getSuitInt() > deck[maxPos].getSuitInt()) {
+					maxPos = suit;
+				}
+				Card temp = deck[maxPos];
+				deck[maxPos] = deck[n - 1];
+				temp = deck[n - 1];
+				n--;
+			}
+		}
+		n = deck.length;
 	}
 
 	/**
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
-	public static void mergeSort() {
+	public static void mergeSort(int from, int to) {
 		// TODO add mergeSort algorithm
+		if (to - from < 2) {
+			if (to > from && deck[to].getSuitInt() < deck[from].getSuitInt()) {
+				Card temp = deck[to];
+				deck[to] = deck[from];
+				deck[from] = temp;
+			}
+		} else {
+			int middle = (from + to) / 2;
+			mergeSort(from, middle);
+			mergeSort(middle + 1, to);
+			merge(deck, from, middle, to);
+		}
+	}
+
+	public static void merge(Card[] deck, int from, int middle, int to) {
+		//TODO i feel like this is wrong....?????
+		{
+			Card[] temp = new Card[1];
+			int i = from, j = middle + 1, k = from;
+
+			// While both arrays have elements left unprocessed:
+			while (i <= middle && j <= to) {
+				if (deck[i].getSuitInt() < deck[j].getSuitInt()) {
+					temp[k] = deck[i]; // Or simply temp[k] = a[i++];
+					i++;
+				} else {
+					temp[k] = deck[j];
+					j++;
+				}
+				k++;
+			}
+
+			// Copy the tail of the first half, if any, into temp:
+			while (i <= middle) {
+				temp[k] = deck[i]; // Or simply temp[k++] = a[i++]
+				i++;
+				k++;
+			}
+
+			// Copy the tail of the second half, if any, into temp:
+			while (j <= to) {
+				temp[k] = deck[j]; // Or simply temp[k++] = a[j++]
+				j++;
+				k++;
+			}
+
+			// Copy temp back into a
+			for (k = from; k <= to; k++)
+				deck[k] = temp[k];
+		}
 	}
 
 	/**
@@ -153,7 +205,6 @@ public class Deck {
 					deck[i] = new Card(suit, rank);
 					i++;
 				}
-
 			}
 		}
 	}
