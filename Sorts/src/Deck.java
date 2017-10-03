@@ -9,23 +9,20 @@ public class Deck {
 
 	private final static int FULLDECK = 52;
 	private static Card[] deck;
-	private static int topCard; //cardsInDeck or topIndex or cardLength
+	private static int topCard;
 	private static boolean isSorted;
-	private static int deckSize;
 
 	public Deck() {
 		deck = new Card[FULLDECK];
 		fillDeck();
 		topCard = 1;
 		isSorted = true;
-		deckSize = deck.length;
 	}
 
 	public Deck(boolean isSorted) {
 		deck = new Card[FULLDECK];
 		fillDeck();
 		this.isSorted = isSorted;
-		deckSize = deck.length;
 	}
 
 	public static void shuffle() { // based on old Deck.java class from 2015-6
@@ -61,18 +58,8 @@ public class Deck {
 
 	}
 
-	public static boolean equals(Deck other) {
-		boolean result = false;
-		
-		for (int i = 0; i<other.deck.length; i++) {
-			result = (deck[i].equals(other.deck[i]));
-		}
-		
-		return result;
-	}
-	
-	public static Card[] getDeck() {
-		return deck;
+	public static boolean equals(Deck d1, Deck d2) {
+		return true;
 	}
 
 	public static Deck[] deal(int hands, int cardsPerHand) {
@@ -84,17 +71,26 @@ public class Deck {
 	}
 
 	public static Card pick() {
-		int randPos = (int) (Math.random() * FULLDECK);
-		 (int i = randPos; i<deckSize; i++){
-			int tempIndex = 0; //TODO shift manually lol
-		}
-		return deck[randPos];
+		return deck[(int) (Math.random() * FULLDECK)];
 	}
 
-	public static void selectionSort() {
+	public static void selectionSort(Card[] c) {
 		// TODO add selectionSort algorithm
+//		int n = c.length;
+//		while (n>1){
+//			int maxPos = 0;
+//			for (int i = 1; i<n; i++){
+//				int suitInt = c[i].getSuitInt(c[i].getSuit());
+//				for (int suit = 0; suit < 4; suit++){
+//					if (suitInt > c[maxPos].getSuitInt(c[maxPos].getSuit())){
+//						maxPos = i;
+//					}
+//					Card temp = c[maxPos];
+//				}
+//			}
+//		}
 	}
-
+	
 	public static void mergeSort() {
 		// TODO add mergeSort algorithm
 	}
@@ -107,6 +103,7 @@ public class Deck {
 						deck[i] = new Card(suit, rank);
 						i++;
 					}
+				
 			}
 		}
 	}

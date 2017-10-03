@@ -146,10 +146,7 @@ public class Card implements Comparable<Card> {
 
 	@Override
 	public int compareTo(Card other) {
-		int val = 0;
-		
-		
-		return val;
+		return (suit.compareTo(other.getSuit()));
 	}
 	
 	public boolean equals(Card other) {
