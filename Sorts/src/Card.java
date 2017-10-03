@@ -1,5 +1,5 @@
 /*	<p>
- * Card class description
+ * The Card class creates cards with suits and ranks.
  * </p>
  * 
  * @author Gabby Baniqued
@@ -8,7 +8,7 @@
 public class Card implements Comparable<Card> {
 
 
-	private String suit;
+	private String suit; 
 	private int rank;
 
 	public Card() {
@@ -44,10 +44,21 @@ public class Card implements Comparable<Card> {
 		return rank;
 	}
 
+	/**
+	 * Prints out readable card (rank and suit)
+	 * 
+	 * @return Card as a String
+	 */
 	public String toString() {
 		return getRankStr(this.rank) + " of " + this.suit;
 	}
 
+	/**
+	 * Converts the int form of rank to a String
+	 * 
+	 * @param rank as an int
+	 * @return rank as a String
+	 */
 	public String getRankStr(int rank) {
 		switch (rank) {
 		case 1:
@@ -81,6 +92,12 @@ public class Card implements Comparable<Card> {
 		}
 	}
 
+	/**
+	 * Converts the String form of rank to an int
+	 * 
+	 * @param rank as a String
+	 * @return rank as an int
+	 */
 	public int getRankInt(String rank) {
 		switch (rank) {
 		case "ACE":
@@ -114,6 +131,12 @@ public class Card implements Comparable<Card> {
 		}
 	}
 
+	/**
+	 * Converts the String form of rank to an int
+	 * 
+	 * @param suit as a String
+	 * @return suit as an int
+	 */
 	public int getSuitInt(String suit) {
 		switch (suit) {
 		case "CLUBS":
@@ -129,6 +152,12 @@ public class Card implements Comparable<Card> {
 		}
 	}
 
+	/**
+	 * Converts the int form of suit to a String
+	 * 
+	 * @param suit as an int
+	 * @return suit as a String
+	 */
 	public String getSuitStr(int suit) {
 		switch (suit) {
 		case 0:
@@ -145,8 +174,17 @@ public class Card implements Comparable<Card> {
 	}
 
 	@Override
-	public int compareTo(Card other) {
-		return (suit.compareTo(other.getSuit()));
+	public int compareTo(Card other) { //TODO help me please
+		int diff = 0;
+		if (suit.equals(other.getSuit())){
+			diff += 20;
+		}
+		else
+			diff += -20;
+		
+		diff += rank - other.getRank();
+		
+		return diff;
 	}
 	
 	public boolean equals(Card other) {
