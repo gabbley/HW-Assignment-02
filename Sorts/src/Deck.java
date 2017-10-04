@@ -33,7 +33,7 @@ public class Deck {
 		deckSize = deck.length;
 	}
 
-	public static Card[] getDeck() {
+	public Card[] getDeck() {
 		return deck;
 	}
 
@@ -43,6 +43,10 @@ public class Deck {
 
 	public static int getTopCard() {
 		return topCard;
+	}
+	
+	public void setDeck(Card[] c){
+		deck = c;
 	}
 
 	/**
@@ -100,10 +104,22 @@ public class Deck {
 	}
 
 	public static Deck[] deal(int hands, int cardsPerHand) {
-		// TODO if statement, returns null if not enough cards in deck to fill
-		// all hands
+		// TODO ask about this
+		
+		Card[] startingDeck = deck;
+		Card[] currHand = null;
+		if (startingDeck.length < cardsPerHand)
+			return null;
 
 		Deck[] d = new Deck[hands];
+		for (int i = 0; i < hands; i++) {
+			for (int j = 0; j < cardsPerHand; j++) {
+				currHand = new Card[cardsPerHand];
+				currHand[i] = startingDeck[i];
+			}
+			d[i].setDeck(currHand);
+		}
+
 		return d;
 	}
 
@@ -115,10 +131,10 @@ public class Deck {
 	public static Card pick() {
 		int randPos = (int) (Math.random() * deckSize);
 		Card randCard = deck[randPos];
-		for (int i = randPos; i <= deckSize-2; i++) {
-			deck[i] = deck[i+1];
+		for (int i = randPos; i <= deckSize - 2; i++) {
+			deck[i] = deck[i + 1];
 		}
-		deck[deck.length-1] = null; //TODO need to fix
+		deck[deck.length - 1] = null; // TODO need to fix
 		return randCard;
 	}
 
@@ -126,42 +142,29 @@ public class Deck {
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
 	public static void selectionSort() {
-		ArrayList<Card> byRank = new ArrayList<Card>();
-
 		int n = deck.length;
 
-		while (n > 1) {
-			int suitMax = 0;
-			for (int suit = 1; suit < n; suit++) {
-				if (deck[suit].getSuitInt() > deck[suitMax].getSuitInt()) {
-					suitMax = suit;
-				}
-				Card suitTemp = deck[suitMax];
-				deck[suitMax] = deck[n - 1];
-				deck[n - 1] = suitTemp;
-				n--;
-			}
-			
-			
-			int rankMax = 0;
-			n = deck.length;
-			int currentSuit = deck[0].getSuitInt();
+		int rankMax = 0;
+		int currentSuit = deck[0].getSuitInt();
 
-			for (int rank = 1; rank < n; rank++) {
-				
-				if (deck[rank].getRank() > deck[rankMax].getRank()) {
-					rankMax = rank;
-				}
-				Card rankTemp = deck[rankMax];
-				deck[rankMax] = deck[n - 1];
-				deck[n - 1] = rankTemp;
-				n--;
+		for (int rank = 1; rank < n; rank++) {
+
+			if (deck[rank].getRank() > deck[rankMax].getRank()) {
+				rankMax = rank;
 			}
+			Card rankTemp = deck[rankMax];
+			deck[rankMax] = deck[n - 1];
+			deck[n - 1] = rankTemp;
+			n--;
 		}
 	}
 
+	public static void pileOfSuits() {
+
+	}
+
 	/**
-	 * Sorts deck by suit and rank using Selection Sort Algorithm
+	 * Sorts deck by suit and rank using Merge Sort Algorithm
 	 */
 	public static void mergeSort(int from, int to) {
 		// TODO add mergeSort algorithm

@@ -7,8 +7,7 @@
 
 public class Card implements Comparable<Card> {
 
-
-	private String suit; 
+	private String suit;
 	private int rank;
 
 	public Card() {
@@ -56,7 +55,8 @@ public class Card implements Comparable<Card> {
 	/**
 	 * Converts the int form of rank to a String
 	 * 
-	 * @param rank as an int
+	 * @param rank
+	 *            as an int
 	 * @return rank as a String
 	 */
 	public String getRankStr(int rank) {
@@ -95,7 +95,8 @@ public class Card implements Comparable<Card> {
 	/**
 	 * Converts the String form of rank to an int
 	 * 
-	 * @param rank as a String
+	 * @param rank
+	 *            as a String
 	 * @return rank as an int
 	 */
 	public int getRankInt(String rank) {
@@ -134,7 +135,8 @@ public class Card implements Comparable<Card> {
 	/**
 	 * Converts the String form of rank to an int
 	 * 
-	 * @param suit as a String
+	 * @param suit
+	 *            as a String
 	 * @return suit as an int
 	 */
 	public int getSuitInt() {
@@ -155,7 +157,8 @@ public class Card implements Comparable<Card> {
 	/**
 	 * Converts the int form of suit to a String
 	 * 
-	 * @param suit as an int
+	 * @param suit
+	 *            as an int
 	 * @return suit as a String
 	 */
 	public String getSuitStr(int suit) {
@@ -175,16 +178,20 @@ public class Card implements Comparable<Card> {
 
 	@Override
 	public int compareTo(Card other) { //TODO help me please
-		int diff = 0;
+		if (suit.equals(other.getSuit())){
+			if(rank == other.getRank()){
+				return 0;
+			}
+			else{
+				return (rank - other.getRank());
+			}
+		}
+		else{
+			return suit.compareTo(other.getSuit()) * 13;
+		}
 		
-		diff += rank - other.getRank(); 
-		//if neg, this < other
-		//if 0, equal
-		//if pos, this > other
-		
-		return diff;
 	}
-	
+
 	public boolean equals(Card other) {
 		return (suit.equals(other.getSuit()) && rank == other.getRank());
 	}
