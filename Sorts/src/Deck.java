@@ -29,7 +29,7 @@ public class Deck {
 	public Deck(boolean isSorted) {
 		deck = new Card[FULLDECK];
 		fillDeck();
-		this.sorted = sorted;
+		this.sorted = isSorted;
 		deckSize = deck.length;
 	}
 
@@ -84,6 +84,11 @@ public class Deck {
 		return deckStr;
 	}
 
+	/**
+	 * Utilizes equals method of Card class to compare each element.
+	 *
+	 * @return true if Decks are identical, false otherwise.
+	 */
 	public static boolean equals(Deck other) {
 		boolean result = false;
 
@@ -110,10 +115,10 @@ public class Deck {
 	public static Card pick() {
 		int randPos = (int) (Math.random() * deckSize);
 		Card randCard = deck[randPos];
-		for (int i = randPos; i <= deckSize; i++) {
-			deck[i] = deck[i++];
-			// TODO shift manually lol
+		for (int i = randPos; i <= deckSize-2; i++) {
+			deck[i] = deck[i+1];
 		}
+		deck[deck.length-1] = null; //TODO need to fix
 		return randCard;
 	}
 
