@@ -177,7 +177,7 @@ public class Card implements Comparable<Card> {
 	}
 
 	@Override
-	public int compareTo(Card other) { //TODO help me please
+	public int compareTo(Card other) { //TODO check this, connect to other methods?
 		if (suit.equals(other.getSuit())){
 			if(rank == other.getRank()){
 				return 0;
