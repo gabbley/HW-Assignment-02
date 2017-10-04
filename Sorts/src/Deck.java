@@ -86,6 +86,7 @@ public class Deck {
 			deckStr += deck[i] + "\n";
 		}
 		return deckStr;
+		
 	}
 
 	/**
@@ -142,6 +143,7 @@ public class Deck {
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
 	public static void selectionSort() {
+		//TODO find a way to pile based on suit, merge sort within that
 		int n = deck.length;
 
 		int rankMax = 0;
@@ -159,8 +161,8 @@ public class Deck {
 		}
 	}
 
-	public static void pileOfSuits() {
-
+	public static Card[] pileOfSuits() {
+		return deck;
 	}
 
 	/**
