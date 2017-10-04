@@ -15,7 +15,7 @@ public class CardTester {
 
 		System.out.println(Deck.pick() + "\n");
 		System.out.println(testDeck);
-		System.out.println(testDeck.deal(2, 3)[0]);
+		System.out.println(testDeck.deal(2, 3)[0].getDeck());
 
 	}
 
