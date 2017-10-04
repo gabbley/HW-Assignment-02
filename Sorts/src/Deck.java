@@ -12,11 +12,13 @@ import java.util.ArrayList;
 public class Deck {
 
 	private final static int FULLDECK = 52; // number of a full deck
-	private final static int EACHRANK = 13; // number of ranks (in compl. deck)
+	private final static int NUMRANKS = 13; // number of ranks (in compl. deck)
+	private final static int NUMSUITS = 4; //number of suits (in compl. deck)
+	
 	private static Card[] deck; // deck as a Card array
 	private static int topCard; // keeps track of last index of deck
 	private static boolean sorted; // if deck is sorted or shuffled
-	private static int deckSize; // gets current deckSize
+	private static int deckSize; // gets initial deckSize
 
 	public Deck() {
 		deck = new Card[FULLDECK];
@@ -77,7 +79,8 @@ public class Deck {
 	 */
 	public String toString() {
 		/*
-		 * TODO disp cards in four columns if complete deck (52), separated by a
+		 * TODO disp cards in four columns if complete deck (52), 
+		 * separated by a
 		 * tab if sorted, each suit shoudl print in its own column ranks should
 		 * be printed as words (Ace of Spades), use switch
 		 */
@@ -105,7 +108,7 @@ public class Deck {
 	}
 
 	public static Deck[] deal(int hands, int cardsPerHand) {
-		// TODO ask about this
+		// TODO need to test deal method
 		
 		Card[] startingDeck = deck;
 		Card[] currHand = null;
@@ -135,7 +138,7 @@ public class Deck {
 		for (int i = randPos; i <= deckSize - 2; i++) {
 			deck[i] = deck[i + 1];
 		}
-		deck[deck.length - 1] = null; // TODO need to fix
+		deck[deck.length - 1] = null; // TODO need to fix final pick
 		return randCard;
 	}
 
@@ -145,9 +148,21 @@ public class Deck {
 	public static void selectionSort() {
 		//TODO find a way to pile based on suit, merge sort within that
 		int n = deck.length;
-
+		ArrayList<Card[]> piles = new ArrayList<Card[]>(n);
 		int rankMax = 0;
 		int currentSuit = deck[0].getSuitInt();
+		Card[] oneSuit = null;
+		
+		for (int i = 0; i<n; i++){
+			int suitAmt = 0;
+			while (currentSuit == i){
+				suitAmt++;
+			}
+			if (suitAmt != 0){
+				oneSuit = new Card[suitAmt];
+			}
+			oneSuit[i] = deck[i];
+		}
 
 		for (int rank = 1; rank < n; rank++) {
 
@@ -169,7 +184,7 @@ public class Deck {
 	 * Sorts deck by suit and rank using Merge Sort Algorithm
 	 */
 	public static void mergeSort(int from, int to) {
-		// TODO add mergeSort algorithm
+		// TODO fix mergeSort algorithm
 		if (to - from < 2) {
 			if (to > from && deck[to].getSuitInt() < deck[from].getSuitInt()) {
 				Card temp = deck[to];
@@ -185,7 +200,7 @@ public class Deck {
 	}
 
 	public static void merge(Card[] deck, int from, int middle, int to) {
-		// TODO i feel like this is wrong....?????
+		// TODO fix merge
 		{
 			Card[] temp = new Card[1];
 			int i = from, j = middle + 1, k = from;
@@ -229,7 +244,7 @@ public class Deck {
 
 		for (int i = 0; i < FULLDECK;) {
 			for (int suit = 0; suit < 4; suit++) {
-				for (int rank = 1; rank <= EACHRANK; rank++) {
+				for (int rank = 1; rank <= NUMRANKS; rank++) {
 					deck[i] = new Card(suit, rank);
 					i++;
 				}
