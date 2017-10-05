@@ -35,6 +35,11 @@ public class Card implements Comparable<Card> {
 		this.rank = getRankInt(rank);
 	}
 
+	public Card(Card o) {
+		this.rank = o.rank;
+		this.suit = o.suit;
+	}
+
 	public String getSuit() {
 		return suit;
 	}
@@ -177,19 +182,19 @@ public class Card implements Comparable<Card> {
 	}
 
 	@Override
-	public int compareTo(Card other) { //TODO check this, connect to other methods?
-		if (suit.equals(other.getSuit())){
-			if(rank == other.getRank()){
+	public int compareTo(Card other) {
+
+		//if equal, return 0
+		if (suit.equals(other.getSuit())) {
+			if (rank == other.getRank()) {
 				return 0;
-			}
-			else{
+			} else { //if suit is equal, rank is not, returns difference of rank
 				return (rank - other.getRank());
 			}
+		} else { //if suit is not equal, returns diff of suit
+			return suit.compareTo(other.getSuit());
 		}
-		else{
-			return suit.compareTo(other.getSuit()) * 13;
-		}
-		
+
 	}
 
 	public boolean equals(Card other) {

@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 
 /*	<p>
- * The Deck class consists mainly of a Card array.<br>
- * This Card array is a deck that can be sorted or shuffled and 
- * does not have to be complete (meaning, containing 52 cards).
+ * The Deck class consists mainly of a Card array, representative of a hand/deck.<br>
  * </p>
  * 
  * @author Gabby Baniqued
@@ -13,26 +11,29 @@ public class Deck {
 
 	private final static int FULLDECK = 52; // number of a full deck
 	private final static int NUMRANKS = 13; // number of ranks (in compl. deck)
-	private final static int NUMSUITS = 4; //number of suits (in compl. deck)
-	
+	private final static int NUMSUITS = 4; // number of suits (in compl. deck)
+
 	private static Card[] deck; // deck as a Card array
 	private static int topCard; // keeps track of last index of deck
 	private static boolean sorted; // if deck is sorted or shuffled
-	private static int deckSize; // gets initial deckSize
 
 	public Deck() {
 		deck = new Card[FULLDECK];
 		fillDeck();
-		topCard = deckSize-1;
+		topCard = deck.length - 1;
 		sorted = true;
-		deckSize = deck.length;
 	}
 
 	public Deck(boolean isSorted) {
 		deck = new Card[FULLDECK];
 		fillDeck();
 		this.sorted = isSorted;
-		deckSize = deck.length;
+		topCard = deck.length - 1;
+	}
+	
+	public Deck(int numCards){
+		deck = new Card[numCards];
+		topCard = deck.length-1;
 	}
 
 	public Card[] getDeck() {
@@ -46,8 +47,8 @@ public class Deck {
 	public static int getTopCard() {
 		return topCard;
 	}
-	
-	public void setDeck(Card[] c){
+
+	public void setDeck(Card[] c) {
 		deck = c;
 	}
 
@@ -75,57 +76,84 @@ public class Deck {
 	 * Overrides toString method to print deck.
 	 *
 	 * @return String of entire deck If deck is complete, will print out in 4
-	 *         columns by suit, ordered by rank
+	 *         columns by suit, ordered by rank, otherwise in one column
 	 */
 	public String toString() {
-		/*
-		 * TODO disp cards in four columns if complete deck (52), 
-		 * separated by a
-		 * tab if sorted, each suit shoudl print in its own column ranks should
-		 * be printed as words (Ace of Spades), use switch
-		 */
+
 		String deckStr = "";
-		for (int rank = 0; rank <= topCard; rank++){
-			for (int suit = 0; suit < NUMSUITS; suit++){
-				deckStr += deck[topCard * suit + rank] + "\t";
+
+		if (topCard == FULLDECK) {
+			for (int rank = 0; rank < NUMRANKS; rank++) {
+				for (int suit = 0; suit < NUMSUITS; suit++) {
+					deckStr += deck[suit * NUMRANKS + rank] + "\t";
+				}
+				deckStr += "\n";
 			}
-			deckStr += "\n";
+		} 
+		
+		else {
+			for (Card c : deck){
+				if (c != null)
+					deckStr += c.toString() + "\n";
+			}
 		}
 		return deckStr;
+
+	}
+	
+	public String toString(Deck[] d){
+		String result = "";
+		for (int i = 0; i<d.length; i++){
+			result += d[i].getDeck().toString();
+		}
 		
+		return result;
 	}
 
 	/**
 	 * Utilizes equals method of Card class to compare each element.
-	 *
+	 * 
+	 * @param Deck to compare
 	 * @return true if Decks are identical, false otherwise.
 	 */
 	public static boolean equals(Deck other) {
-		boolean result = false;
 
 		for (int i = 0; i < other.deck.length; i++) {
-			result = (deck[i].equals(other.deck[i]));
+			if (!(deck[i].equals(other.deck[i]))) {
+				return false;
+			}
 		}
 
-		return result;
+		return true;
 	}
 
+	/**
+	 * Deals out specified number of cards to specified number of hands.
+	 *
+	 * @param number of hands
+	 * @param cards in each hand
+	 * 
+	 * @return final Deck[] of hands
+	 */
 	public static Deck[] deal(int hands, int cardsPerHand) {
-		// TODO need to test deal method
-		
-		Card[] startingDeck = deck;
-		Card[] currHand = null;
-		if (startingDeck.length < cardsPerHand)
+
+		if (topCard < (hands * cardsPerHand))
 			return null;
 
-		Deck[] d = new Deck[hands];
-		for (int i = 0; i < hands; i++) {
-				currHand = new Card[cardsPerHand];
-				currHand[i] = startingDeck[i];
-			d[i].setDeck(currHand);
+		Deck[] allHands = new Deck[hands];
+		for (int c = 0; c < hands; c++) {
+			allHands[c] = new Deck(cardsPerHand);
+			// with numb of cards in parameter (cardsPerHand) //top card zero
 		}
 
-		return d;
+		for (int ca = 0; ca < cardsPerHand; ca++) {
+			for (int h = 0; h < hands; h++) {
+				//Card replaceCard = new Card(deck[topCard]);
+				allHands[h].deck[ca] = deck[topCard]; //poss copy constructor
+			}
+		}
+
+		return allHands;
 	}
 
 	/**
@@ -134,11 +162,12 @@ public class Deck {
 	 * @return random Card from deck
 	 */
 	public static Card pick() {
-		int randPos = (int) (Math.random() * deckSize);
+		int randPos = (int) (Math.random() * topCard);
 		Card randCard = deck[randPos];
-		for (int i = randPos; i <= topCard - 2; i++) {
-			deck[i] = deck[i + 1];
+		for (int i = randPos + 1; i <= topCard; i++) {
+			deck[i - 1] = deck[i];
 		}
+		deck[topCard] = null;
 		topCard--;
 		return randCard;
 	}
@@ -147,45 +176,33 @@ public class Deck {
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
 	public static void selectionSort() {
-		//TODO find a way to pile based on suit, merge sort within that
-		int n = deck.length;
-		ArrayList<Card[]> piles = new ArrayList<Card[]>(n);
-		int rankMax = 0;
-		int currentSuit = deck[0].getSuitInt();
-		Card[] oneSuit = null;
+		//Note: throws NullPointerException
 		
-		for (int i = 0; i<n; i++){
-			int suitAmt = 0;
-			while (currentSuit == i){
-				suitAmt++;
+		for (int n = deck.length; n > 1; n--){
+			int maxPos = 0;
+			for (int i = 1; i < n; i++){
+				if (deck[i].compareTo(deck[maxPos]) > 0){ //error with compareTo?
+					maxPos = i;
+				}
 			}
-			if (suitAmt != 0){
-				oneSuit = new Card[suitAmt];
-			}
-			oneSuit[i] = deck[i];
+			
+			//swap maxPos with rightmost index
+			Card temp = deck[maxPos];
+			deck[maxPos] = deck[n-1];
+			deck[n-1] = temp;
+			
 		}
-
-		for (int rank = 1; rank < n; rank++) {
-
-			if (deck[rank].getRank() > deck[rankMax].getRank()) {
-				rankMax = rank;
-			}
-			Card rankTemp = deck[rankMax];
-			deck[rankMax] = deck[n - 1];
-			deck[n - 1] = rankTemp;
-			n--;
-		}
-	}
-
-	public static Card[] pileOfSuits() {
-		return deck;
+		
 	}
 
 	/**
 	 * Sorts deck by suit and rank using Merge Sort Algorithm
+	 * 
+	 * @param starting index
+	 * @param ending index
 	 */
 	public static void mergeSort(int from, int to) {
-		// TODO fix mergeSort algorithm
+	//method is very much wrong i think
 		if (to - from < 2) {
 			if (to > from && deck[to].getSuitInt() < deck[from].getSuitInt()) {
 				Card temp = deck[to];
@@ -200,6 +217,14 @@ public class Deck {
 		}
 	}
 
+
+	/**
+	 * Assists in Merge Sort algorithm (used provided code)
+	 * 
+	 * @param from, starting index
+	 * @param middle, middle index
+	 * @param ending index
+	 */
 	public static void merge(Card[] deck, int from, int middle, int to) {
 		// TODO fix merge
 		{
@@ -244,7 +269,7 @@ public class Deck {
 	public static void fillDeck() {
 
 		for (int i = 0; i < FULLDECK;) {
-			for (int suit = 0; suit < 4; suit++) {
+			for (int suit = 0; suit < NUMSUITS; suit++) {
 				for (int rank = 1; rank <= NUMRANKS; rank++) {
 					deck[i] = new Card(suit, rank);
 					i++;

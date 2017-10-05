@@ -1,5 +1,5 @@
 /*	<p>
- * CardSuitComparator class description
+ * Able to compare two cards.
  * </p>
  * 
  * @author Gabby Baniqued
