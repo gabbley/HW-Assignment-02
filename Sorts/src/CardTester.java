@@ -20,14 +20,14 @@ public class CardTester {
 		// System.out.println(testCard);
 
 		Deck testDeck = new Deck();
-		// testDeck.shuffle();
+		//testDeck.shuffle();
 		// System.out.println(testDeck);
 
-		// testDeck.selectionSort();
+		//testDeck.selectionSort();
 		out.println(testDeck);
 
-		out.println(Deck.pick() + "\n");
-		out.println(testDeck);
+		//out.println(Deck.pick() + "\n");
+		//out.println(testDeck);
 		//out.println(testDeck.deal(2, 3)[0].getDeck());
 		
 		out.close();

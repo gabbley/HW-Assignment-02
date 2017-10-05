@@ -23,7 +23,7 @@ public class Deck {
 	public Deck() {
 		deck = new Card[FULLDECK];
 		fillDeck();
-		topCard = 1;
+		topCard = deckSize-1;
 		sorted = true;
 		deckSize = deck.length;
 	}
@@ -85,8 +85,11 @@ public class Deck {
 		 * be printed as words (Ace of Spades), use switch
 		 */
 		String deckStr = "";
-		for (int i = 0; i < deck.length; i++) {
-			deckStr += deck[i] + "\n";
+		for (int rank = 0; rank <= topCard; rank++){
+			for (int suit = 0; suit < NUMSUITS; suit++){
+				deckStr += deck[topCard * suit + rank] + "\t";
+			}
+			deckStr += "\n";
 		}
 		return deckStr;
 		
@@ -117,10 +120,8 @@ public class Deck {
 
 		Deck[] d = new Deck[hands];
 		for (int i = 0; i < hands; i++) {
-			for (int j = 0; j < cardsPerHand; j++) {
 				currHand = new Card[cardsPerHand];
 				currHand[i] = startingDeck[i];
-			}
 			d[i].setDeck(currHand);
 		}
 
@@ -135,10 +136,10 @@ public class Deck {
 	public static Card pick() {
 		int randPos = (int) (Math.random() * deckSize);
 		Card randCard = deck[randPos];
-		for (int i = randPos; i <= deckSize - 2; i++) {
+		for (int i = randPos; i <= topCard - 2; i++) {
 			deck[i] = deck[i + 1];
 		}
-		deck[deck.length - 1] = null; // TODO need to fix final pick
+		topCard--;
 		return randCard;
 	}
 
