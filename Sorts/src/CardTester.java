@@ -5,6 +5,7 @@
  * @author Gabby Baniqued
  * */
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -13,16 +14,19 @@ import java.util.*;
 public class CardTester {
 
 	public static void main(String[] args) {
+		
+		
 		PrintWriter out = null;
 		
 		try {
-			out = new PrintWriter("output.txt");
+			out = new PrintWriter(new File("output.txt"));
 		} catch (FileNotFoundException e) {
+			System.out.println("No Print");
 			e.printStackTrace();
 		}
 		
 		out.println("Name: Gabby Baniqued\n"
-		+ "Mood: Stressed\n");
+		+ "Mood: Upset\n");
 		
 		out.println("Testing the following:  \n"
 				+ "sorted deck, shuffled deck, pick(), deal"+ "\n");

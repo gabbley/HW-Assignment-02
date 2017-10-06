@@ -82,7 +82,7 @@ public class Deck {
 
 		String deckStr = "";
 
-		if (topCard == FULLDECK) {
+		if (topCard == FULLDECK-1) {
 			for (int rank = 0; rank < NUMRANKS; rank++) {
 				for (int suit = 0; suit < NUMSUITS; suit++) {
 					deckStr += deck[suit * NUMRANKS + rank] + "\t";
