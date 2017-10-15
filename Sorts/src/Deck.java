@@ -9,39 +9,46 @@ import java.util.ArrayList;
 
 public class Deck {
 
-	private final static int FULLDECK = 52; // number of a full deck
 	private final static int NUMRANKS = 13; // number of ranks (in compl. deck)
 	private final static int NUMSUITS = 4; // number of suits (in compl. deck)
+	private final static int DECKSIZE = NUMRANKS * NUMSUITS; // number of a full
+																// deck
 
 	private Card[] deck; // deck as a Card array
 	private int topCard; // keeps track of last index of deck
 	private boolean sorted; // if deck is sorted or shuffled
 
 	public Deck() {
-		deck = new Card[FULLDECK];
-		fillDeck();
+		deck = new Card[DECKSIZE];
+		fillDeck(sorted);
 		topCard = deck.length - 1;
 		sorted = true;
 	}
 
-	public Deck(boolean isSorted) {
-		deck = new Card[FULLDECK];
-		fillDeck();
-		this.sorted = isSorted;
+	public Deck(boolean sorted) {
+		deck = new Card[DECKSIZE];
+		fillDeck(sorted);
+		this.sorted = sorted;
 		topCard = deck.length - 1;
 	}
-	
-	public Deck(int numCards){
+
+	public Deck(int numCards) {
 		deck = new Card[numCards];
-		topCard = deck.length-1;
+		topCard = deck.length - 1;
+	}
+
+	public Deck(Deck o) { //copy constructor
+		Card[] newDeck = new Card[topCard];
+		for (int i = 0; i < topCard; i++) {
+			newDeck[i] = deck[i];
+		}
+		this.deck = newDeck;
+		this.topCard = o.topCard;
+		this.sorted = o.sorted;
 	}
 
 	public Card[] getDeck() {
 		return deck;
-	}
-
-	public boolean isSorted() {
-		return sorted;
 	}
 
 	public int getTopCard() {
@@ -82,17 +89,17 @@ public class Deck {
 
 		String deckStr = "";
 
-		if (topCard == FULLDECK) {
+		if (topCard == DECKSIZE) {
 			for (int rank = 0; rank < NUMRANKS; rank++) {
 				for (int suit = 0; suit < NUMSUITS; suit++) {
 					deckStr += deck[suit * NUMRANKS + rank] + "\t";
 				}
 				deckStr += "\n";
 			}
-		} 
-		
+		}
+
 		else {
-			for (Card c : deck){
+			for (Card c : deck) {
 				if (c != null)
 					deckStr += c.toString() + "\n";
 			}
@@ -100,38 +107,48 @@ public class Deck {
 		return deckStr;
 
 	}
-	
-	public String toString(Deck[] d){
+
+	public String toString(Deck[] d) {
 		String result = "";
-		for (int i = 0; i<d.length; i++){
+		for (int i = 0; i < d.length; i++) {
 			result += d[i].getDeck().toString();
 		}
-		
+
 		return result;
 	}
 
 	/**
 	 * Utilizes equals method of Card class to compare each element.
 	 * 
-	 * @param Deck to compare
+	 * @param Deck
+	 *            to compare
 	 * @return true if Decks are identical, false otherwise.
 	 */
 	public boolean equals(Deck other) {
 
-		for (int i = 0; i < other.deck.length; i++) {
-			if (!(deck[i].equals(other.deck[i]))) {
-				return false;
+		Deck mainDeck = new Deck(this);
+		Deck otherDeck = new Deck(other);
+
+		if (mainDeck.getDeck().length != otherDeck.getDeck().length)
+			return false;
+		else {
+
+			for (int i = 0; i < otherDeck.getDeck().length; i++) {
+				if (!(mainDeck.getDeck()[i].equals(other.getDeck()[i]))) {
+					return false;
+				}
 			}
 		}
-
 		return true;
 	}
 
 	/**
 	 * Deals out specified number of cards to specified number of hands.
 	 *
-	 * @param number of hands
-	 * @param cards in each hand
+	 * @param number
+	 *            of hands
+	 * @param cards
+	 *            in each hand
 	 * 
 	 * @return final Deck[] of hands
 	 */
@@ -141,15 +158,15 @@ public class Deck {
 			return null;
 
 		Deck[] allHands = new Deck[hands];
-		for (int c = 0; c < hands; c++) {
-			allHands[c] = new Deck(cardsPerHand);
-			// with numb of cards in parameter (cardsPerHand) //top card zero
+		for (int c = 0; c < allHands.length; c++) {
+			allHands[c] = new Deck();
+			allHands[c].deck = new Card[cardsPerHand];
 		}
 
 		for (int ca = 0; ca < cardsPerHand; ca++) {
 			for (int h = 0; h < hands; h++) {
-				//Card replaceCard = new Card(deck[topCard]);
-				allHands[h].deck[ca] = deck[topCard]; //poss copy constructor
+				// Card replaceCard = new Card(deck[topCard]);
+				allHands[h].deck[ca] = deck[topCard]; // poss copy constructor
 			}
 		}
 
@@ -176,33 +193,37 @@ public class Deck {
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
 	public void selectionSort() {
-		//Note: throws NullPointerException
-		
-		for (int n = deck.length; n > 1; n--){
-			int maxPos = 0;
-			for (int i = 1; i < n; i++){
-				if (deck[i].compareTo(deck[maxPos]) > 0){ //error with compareTo?
-					maxPos = i;
+		// Note: throws NullPointerException
+
+		if (topCard > 0) {
+			for (int n = topCard; n > 1; n--) {
+				int maxPos = 0;
+				for (int i = 1; i < n; i++) {
+					if (deck[i].compareTo(deck[maxPos]) > 0) { // error with										// compareTo?
+						maxPos = i;
+					}
 				}
+
+				// swap maxPos with rightmost index
+				Card temp = deck[maxPos];
+				deck[maxPos] = deck[n - 1];
+				deck[n - 1] = temp;
+
 			}
-			
-			//swap maxPos with rightmost index
-			Card temp = deck[maxPos];
-			deck[maxPos] = deck[n-1];
-			deck[n-1] = temp;
-			
 		}
-		
+
 	}
 
 	/**
 	 * Sorts deck by suit and rank using Merge Sort Algorithm
 	 * 
-	 * @param starting index
-	 * @param ending index
+	 * @param starting
+	 *            index
+	 * @param ending
+	 *            index
 	 */
 	public void mergeSort(int from, int to) {
-	//method is very much wrong i think
+		// method is very much wrong i think
 		if (to - from < 2) {
 			if (to > from && deck[to].getSuitInt() < deck[from].getSuitInt()) {
 				Card temp = deck[to];
@@ -217,13 +238,15 @@ public class Deck {
 		}
 	}
 
-
 	/**
 	 * Assists in Merge Sort algorithm (used provided code)
 	 * 
-	 * @param from, starting index
-	 * @param middle, middle index
-	 * @param ending index
+	 * @param from,
+	 *            starting index
+	 * @param middle,
+	 *            middle index
+	 * @param ending
+	 *            index
 	 */
 	public void merge(Card[] deck, int from, int middle, int to) {
 		// TODO fix merge
@@ -264,11 +287,14 @@ public class Deck {
 	}
 
 	/**
-	 * Fills a perfect deck, sorted by suit and rank
+	 * Fills a deck, sorted by suit and rank
+	 * 
+	 * @param determines if deck should be shuffled or not
+	 * 
 	 */
-	public void fillDeck() {
+	public void fillDeck(boolean sorted) {
 
-		for (int i = 0; i < FULLDECK;) {
+		for (int i = 0; i < DECKSIZE;) {
 			for (int suit = 0; suit < NUMSUITS; suit++) {
 				for (int rank = 1; rank <= NUMRANKS; rank++) {
 					deck[i] = new Card(suit, rank);
@@ -276,5 +302,7 @@ public class Deck {
 				}
 			}
 		}
+		if (sorted != true)
+			shuffle();
 	}
 }
