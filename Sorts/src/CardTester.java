@@ -44,8 +44,9 @@ public class CardTester {
 		testDeck.shuffle();
 		out.println(testDeck+ "\n");
 		
-		//testDeck.selectionSort();
-		//out.println(testDeck+ "\n");
+		out.println("Deck, sorted with selection sort:");
+		testDeck.selectionSort();
+		out.println(testDeck+ "\n");
 		
 //		testDeck.mergeSort(1, 51);
 //		out.println(testDeck + "\n");

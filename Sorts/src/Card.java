@@ -7,11 +7,30 @@
 
 public class Card implements Comparable<Card> {
 
+	private final String ACE = "ACE";
+	private final String TWO = "TWO";
+	private final String THREE = "THREE";
+	private final String FOUR = "FOUR";
+	private final String FIVE = "FIVE";
+	private final String SIX = "SIX";
+	private final String SEVEN = "SEVEN";
+	private final String EIGHT = "EIGHT";
+	private final String NINE = "NINE";
+	private final String TEN = "TEN";
+	private final String JACK = "JACK";
+	private final String QUEEN = "QUEEN";
+	private final String KING = "KING";
+	
+	private final String CLUBS = "CLUBS";
+	private final String DIAMONDS = "DIAMONDS";
+	private final String SPADES = "SPADES";
+	private final String HEARTS = "HEARTS";
+
 	private String suit;
 	private int rank;
 
 	public Card() {
-		suit = "SPADES";
+		suit = SPADES;
 		rank = 1;
 	}
 
@@ -67,33 +86,33 @@ public class Card implements Comparable<Card> {
 	public String getRankStr(int rank) {
 		switch (rank) {
 		case 1:
-			return "ACE";
+			return ACE;
 		case 2:
-			return "TWO";
+			return TWO;
 		case 3:
-			return "THREE";
+			return THREE;
 		case 4:
-			return "FOUR";
+			return FOUR;
 		case 5:
-			return "FIVE";
+			return FIVE;
 		case 6:
-			return "SIX";
+			return SIX;
 		case 7:
-			return "SEVEN";
+			return SEVEN;
 		case 8:
-			return "EIGHT";
+			return EIGHT;
 		case 9:
-			return "NINE";
+			return NINE;
 		case 10:
-			return "TEN";
+			return TEN;
 		case 11:
-			return "JACK";
+			return JACK;
 		case 12:
-			return "QUEEN";
+			return QUEEN;
 		case 13:
-			return "KING";
+			return KING;
 		default:
-			return "NULL";
+			return null;
 		}
 	}
 
@@ -105,32 +124,32 @@ public class Card implements Comparable<Card> {
 	 * @return rank as an int
 	 */
 	public int getRankInt(String rank) {
-		switch (rank) {
-		case "ACE":
+		switch (rank.toUpperCase()) {
+		case ACE:
 			return 1;
-		case "TWO":
+		case TWO:
 			return 2;
-		case "THREE":
+		case THREE:
 			return 3;
-		case "FOUR":
+		case FOUR:
 			return 4;
-		case "FIVE":
+		case FIVE:
 			return 5;
-		case "SIX":
+		case SIX:
 			return 6;
-		case "SEVEN":
+		case SEVEN:
 			return 7;
-		case "EIGHT":
+		case EIGHT:
 			return 8;
-		case "NINE":
+		case NINE:
 			return 9;
-		case "TEN":
+		case TEN:
 			return 10;
-		case "JACK":
+		case JACK:
 			return 11;
-		case "QUEEN":
+		case QUEEN:
 			return 12;
-		case "KING":
+		case KING:
 			return 13;
 		default:
 			return -1;
@@ -145,14 +164,14 @@ public class Card implements Comparable<Card> {
 	 * @return suit as an int
 	 */
 	public int getSuitInt() {
-		switch (suit) {
-		case "CLUBS":
+		switch (suit.toUpperCase()) {
+		case CLUBS:
 			return 0;
-		case "DIAMONDS":
+		case DIAMONDS:
 			return 1;
-		case "HEARTS":
+		case HEARTS:
 			return 2;
-		case "SPADES":
+		case SPADES:
 			return 3;
 		default:
 			return -1;
@@ -169,29 +188,30 @@ public class Card implements Comparable<Card> {
 	public String getSuitStr(int suit) {
 		switch (suit) {
 		case 0:
-			return "CLUBS";
+			return CLUBS;
 		case 1:
-			return "DIAMONDS";
+			return DIAMONDS;
 		case 2:
-			return "HEARTS";
+			return HEARTS;
 		case 3:
-			return "SPADES";
+			return SPADES;
 		default:
-			return "NULL";
+			return null;
 		}
 	}
 
 	@Override
 	public int compareTo(Card other) {
 
-		//if equal, return 0
+		// if equal, return 0
 		if (suit.equals(other.getSuit())) {
 			if (rank == other.getRank()) {
 				return 0;
-			} else { //if suit is equal, rank is not, returns difference of rank
+			} else { // if suit is equal, rank is not, returns difference of
+						// rank
 				return (rank - other.getRank());
 			}
-		} else { //if suit is not equal, returns diff of suit
+		} else { // if suit is not equal, returns diff of suit
 			return suit.compareTo(other.getSuit());
 		}
 

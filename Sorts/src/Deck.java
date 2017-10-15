@@ -13,9 +13,9 @@ public class Deck {
 	private final static int NUMRANKS = 13; // number of ranks (in compl. deck)
 	private final static int NUMSUITS = 4; // number of suits (in compl. deck)
 
-	private static Card[] deck; // deck as a Card array
-	private static int topCard; // keeps track of last index of deck
-	private static boolean sorted; // if deck is sorted or shuffled
+	private Card[] deck; // deck as a Card array
+	private int topCard; // keeps track of last index of deck
+	private boolean sorted; // if deck is sorted or shuffled
 
 	public Deck() {
 		deck = new Card[FULLDECK];
@@ -40,11 +40,11 @@ public class Deck {
 		return deck;
 	}
 
-	public static boolean isSorted() {
+	public boolean isSorted() {
 		return sorted;
 	}
 
-	public static int getTopCard() {
+	public int getTopCard() {
 		return topCard;
 	}
 
@@ -55,7 +55,7 @@ public class Deck {
 	/**
 	 * Replaces current deck with newly unshuffled deck.
 	 */
-	public static void shuffle() { // based on old Deck.java class from 2015-6
+	public void shuffle() { // based on old Deck.java class from 2015-6
 
 		Card[] shuffDeck = deck;
 
@@ -116,7 +116,7 @@ public class Deck {
 	 * @param Deck to compare
 	 * @return true if Decks are identical, false otherwise.
 	 */
-	public static boolean equals(Deck other) {
+	public boolean equals(Deck other) {
 
 		for (int i = 0; i < other.deck.length; i++) {
 			if (!(deck[i].equals(other.deck[i]))) {
@@ -135,7 +135,7 @@ public class Deck {
 	 * 
 	 * @return final Deck[] of hands
 	 */
-	public static Deck[] deal(int hands, int cardsPerHand) {
+	public Deck[] deal(int hands, int cardsPerHand) {
 
 		if (topCard < (hands * cardsPerHand))
 			return null;
@@ -161,7 +161,7 @@ public class Deck {
 	 *
 	 * @return random Card from deck
 	 */
-	public static Card pick() {
+	public Card pick() {
 		int randPos = (int) (Math.random() * topCard);
 		Card randCard = deck[randPos];
 		for (int i = randPos + 1; i <= topCard; i++) {
@@ -175,7 +175,7 @@ public class Deck {
 	/**
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 */
-	public static void selectionSort() {
+	public void selectionSort() {
 		//Note: throws NullPointerException
 		
 		for (int n = deck.length; n > 1; n--){
@@ -201,7 +201,7 @@ public class Deck {
 	 * @param starting index
 	 * @param ending index
 	 */
-	public static void mergeSort(int from, int to) {
+	public void mergeSort(int from, int to) {
 	//method is very much wrong i think
 		if (to - from < 2) {
 			if (to > from && deck[to].getSuitInt() < deck[from].getSuitInt()) {
@@ -225,7 +225,7 @@ public class Deck {
 	 * @param middle, middle index
 	 * @param ending index
 	 */
-	public static void merge(Card[] deck, int from, int middle, int to) {
+	public void merge(Card[] deck, int from, int middle, int to) {
 		// TODO fix merge
 		{
 			Card[] temp = new Card[1];
@@ -266,7 +266,7 @@ public class Deck {
 	/**
 	 * Fills a perfect deck, sorted by suit and rank
 	 */
-	public static void fillDeck() {
+	public void fillDeck() {
 
 		for (int i = 0; i < FULLDECK;) {
 			for (int suit = 0; suit < NUMSUITS; suit++) {
