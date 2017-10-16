@@ -24,13 +24,32 @@ public class CardTester {
 		out.println("Name: Gabby Baniqued\n"
 		+ "Mood: Stressed\n");
 		
-		out.println("Testing the following:  \n"
-				+ "sorted deck, shuffled deck, pick(), deal"+ "\n");
+		out.println("Testing the Card Class\n");
+		ArrayList<Card> testCards = new ArrayList<Card>();
+		Card testCard = new Card();
 		
+		out.println("Testing the Card Class Constructors\n");
+		testCards.add(new Card());
+		testCards.add(new Card(0, 1));
+		testCards.add(new Card("Spades", "Ace"));
+		testCards.add(new Card(0, "Five"));
+		testCards.add(new Card(testCard));
 		
+		for (int i = 0; i<testCards.size(); i++){
+			out.println(testCards.get(i));
+		}
+		
+		out.println("test getters\n");
+		out.println(testCard.getRank() + " of " + testCard.getSuit());
+		out.println(testCard.getRankStr(1));
+		out.println(testCard.getRankInt("ACE"));
+		out.println(testCard.getSuitInt());
+		out.println(testCard.getSuitStr(0));
+		
+		//TODO TEST COMPARETO
+		out.println("test compareTo and equals\n");
 
-		// Card testCard = new Card();
-		// System.out.println(testCard);
+		
 		out.println("Perfect Deck:");
 		Deck testDeck = new Deck();
 		out.println(testDeck + "\n");
@@ -47,14 +66,14 @@ public class CardTester {
 		out.println("Deck, sorted with selection sort:");
 		testDeck.selectionSort();
 		out.println(testDeck+ "\n");
-		
+//		
 //		testDeck.mergeSort(1, 51);
 //		out.println(testDeck + "\n");
 
 		out.println("Deck, attempted deal");
 		Deck[] deckArr = testDeck.deal(2, 3); //could not figure out how to actually print deck
 		for (int i = 0; i<deckArr.length; i++){
-			out.println(testDeck.toString(deckArr));
+			out.println(testDeck.toString());
 		}
 		
 		out.close();

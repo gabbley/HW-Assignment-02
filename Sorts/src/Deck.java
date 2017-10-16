@@ -37,7 +37,7 @@ public class Deck {
 		topCard = deck.length - 1;
 	}
 
-	public Deck(Deck o) { //copy constructor
+	public Deck(Deck o) { // copy constructor
 		Card[] newDeck = new Card[topCard];
 		for (int i = 0; i < topCard; i++) {
 			newDeck[i] = deck[i];
@@ -110,10 +110,9 @@ public class Deck {
 
 	public String toString(Deck[] d) {
 		String result = "";
-		for (int i = 0; i < d.length; i++) {
+		for (int i = 0; i < topCard; i++) {
 			result += d[i].getDeck().toString();
 		}
-
 		return result;
 	}
 
@@ -165,8 +164,8 @@ public class Deck {
 
 		for (int ca = 0; ca < cardsPerHand; ca++) {
 			for (int h = 0; h < hands; h++) {
-				// Card replaceCard = new Card(deck[topCard]);
-				allHands[h].deck[ca] = deck[topCard]; // poss copy constructor
+				Card replaceCard = new Card(deck[topCard]);
+				allHands[h].deck[ca] = replaceCard; // poss copy constructor
 			}
 		}
 
@@ -199,7 +198,8 @@ public class Deck {
 			for (int n = topCard; n > 1; n--) {
 				int maxPos = 0;
 				for (int i = 1; i < n; i++) {
-					if (deck[i].compareTo(deck[maxPos]) > 0) { // error with										// compareTo?
+					if (deck[i].compareTo(deck[maxPos]) > 0) { // error with
+																// compareTo?
 						maxPos = i;
 					}
 				}
@@ -215,81 +215,10 @@ public class Deck {
 	}
 
 	/**
-	 * Sorts deck by suit and rank using Merge Sort Algorithm
-	 * 
-	 * @param starting
-	 *            index
-	 * @param ending
-	 *            index
-	 */
-	public void mergeSort(int from, int to) {
-		// method is very much wrong i think
-		if (to - from < 2) {
-			if (to > from && deck[to].getSuitInt() < deck[from].getSuitInt()) {
-				Card temp = deck[to];
-				deck[to] = deck[from];
-				deck[from] = temp;
-			}
-		} else {
-			int middle = (from + to) / 2;
-			mergeSort(from, middle);
-			mergeSort(middle + 1, to);
-			merge(deck, from, middle, to);
-		}
-	}
-
-	/**
-	 * Assists in Merge Sort algorithm (used provided code)
-	 * 
-	 * @param from,
-	 *            starting index
-	 * @param middle,
-	 *            middle index
-	 * @param ending
-	 *            index
-	 */
-	public void merge(Card[] deck, int from, int middle, int to) {
-		// TODO fix merge
-		{
-			Card[] temp = new Card[1];
-			int i = from, j = middle + 1, k = from;
-
-			// While both arrays have elements left unprocessed:
-			while (i <= middle && j <= to) {
-				if (deck[i].getSuitInt() < deck[j].getSuitInt()) {
-					temp[k] = deck[i]; // Or simply temp[k] = a[i++];
-					i++;
-				} else {
-					temp[k] = deck[j];
-					j++;
-				}
-				k++;
-			}
-
-			// Copy the tail of the first half, if any, into temp:
-			while (i <= middle) {
-				temp[k] = deck[i]; // Or simply temp[k++] = a[i++]
-				i++;
-				k++;
-			}
-
-			// Copy the tail of the second half, if any, into temp:
-			while (j <= to) {
-				temp[k] = deck[j]; // Or simply temp[k++] = a[j++]
-				j++;
-				k++;
-			}
-
-			// Copy temp back into a
-			for (k = from; k <= to; k++)
-				deck[k] = temp[k];
-		}
-	}
-
-	/**
 	 * Fills a deck, sorted by suit and rank
 	 * 
-	 * @param determines if deck should be shuffled or not
+	 * @param determines
+	 *            if deck should be shuffled or not
 	 * 
 	 */
 	public void fillDeck(boolean sorted) {
