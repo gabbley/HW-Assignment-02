@@ -210,7 +210,7 @@ public class Deck {
 				deck[n - 1] = temp;
 
 			}
-		} //mm
+		}
 
 	}
 
@@ -229,7 +229,7 @@ public class Deck {
 					deck[i] = new Card(suit, rank);
 					i++;
 				}
-			}
+			} //help
 		}
 		if (sorted != true)
 			shuffle();
