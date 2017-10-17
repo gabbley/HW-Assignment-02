@@ -66,7 +66,7 @@ public class Deck {
 
 		Card[] shuffDeck = deck;
 
-		for (int k = shuffDeck.length - 1; k > 0; k--) {
+		for (int k = topCard; k > 0; k--) {
 			int howMany = k + 1;
 			int start = 0;
 			int randPos = (int) (Math.random() * howMany) + start;
@@ -89,11 +89,8 @@ public class Deck {
 
 		String deckStr = "";
 
-<<<<<<< HEAD
 		if (topCard == DECKSIZE) {
-=======
-		if (topCard == FULLDECK-1) {
->>>>>>> branch 'master' of https://github.com/gabbley/HW-Assignment-02.git
+
 			for (int rank = 0; rank < NUMRANKS; rank++) {
 				for (int suit = 0; suit < NUMSUITS; suit++) {
 					deckStr += deck[suit * NUMRANKS + rank] + "\t";
@@ -217,6 +214,92 @@ public class Deck {
 		}
 
 	}
+	
+	
+	/**
+	 * Sorts deck by suit and rank using Selection Sort Algorithm
+	 * 
+	 * @param deck of cards to be sorted
+	 */
+	public static void mergeSort(Card[] d) {
+		Card[] temp = new Card[d.length];
+		recursiveSort(d, 0, d.length - 1, temp);
+	}
+
+	/**
+	 * Merges unsorted elements into one array in sorted order
+	 * 
+	 * @param d 
+	 * 		deck of cards
+	 * @param from
+	 * 		index starting from
+	 * @param middle
+	 * 		middle index
+	 * @param to
+	 * 		index going towards
+	 * @param temp
+	 * 		to copy over cards, store temporarily
+	 */
+	private static void merge(Card[] d, int from, int middle, int to, Card[] temp) {
+		int i = from, j = middle + 1, k = from;
+
+		// While both arrays have elements left unprocessed:
+		while (i <= middle && j <= to) {
+			if (d[i].compareTo(d[j]) <= -1) {
+				temp[k] = d[i]; // Or simply temp[k] = a[i++];
+				i++;
+			} else {
+				temp[k] = d[j];
+				j++;
+			}
+			k++;
+		}
+
+		// Copy the tail of the first half, if any, into temp:
+		while (i <= middle) {
+			temp[k] = d[i]; // Or simply temp[k++] = a[i++]
+			i++;
+			k++;
+		}
+
+		// Copy the tail of the second half, if any, into temp:
+		while (j <= to) {
+			temp[k] = d[j]; // Or simply temp[k++] = a[j++]
+			j++;
+			k++;
+		}
+
+		// Copy temp back into a
+		for (k = from; k <= to; k++)
+			d[k] = temp[k];
+	}
+	/**
+	 * Recursively merges elements together until sorted
+	 * 
+	 * @param d 
+	 * 		deck of cards
+	 * @param from
+	 * 		index starting from
+	 * @param to
+	 * 		index going towards
+	 * @param temp
+	 * 		to copy over cards, store temporarily
+	 */
+	private static void recursiveSort(Card[] d, int from, int to, Card[] temp) {
+		if (to - from < 2) {
+			if (to > from && d[to].compareTo(d[from]) <= -1) {
+				// swap a[to] and a[from]
+				Card aTemp = d[to];
+				d[to] = d[from];
+				d[from] = aTemp;
+			}
+		} else {
+			int middle = (from + to) / 2;
+			recursiveSort(d, from, middle, temp);
+			recursiveSort(d, middle + 1, to, temp);
+			merge(d, from, middle, to, temp);
+		}
+	}
 
 	/**
 	 * Fills a deck, sorted by suit and rank
@@ -233,7 +316,7 @@ public class Deck {
 					deck[i] = new Card(suit, rank);
 					i++;
 				}
-			} //help
+			} // help
 		}
 		if (sorted != true)
 			shuffle();

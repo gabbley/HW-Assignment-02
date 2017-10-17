@@ -25,8 +25,8 @@ public class CardTester {
 			e.printStackTrace();
 		}
 		
-		out.println("Name: Gabby Baniqued\n"
-		+ "Mood: Upset\n");
+		out.println("Name: Gabby Baniqued!\n"
+		+ "Mood: Upset?\n");
 		
 		out.println("Testing the Card Class\n");
 		ArrayList<Card> testCards = new ArrayList<Card>();
@@ -70,9 +70,9 @@ public class CardTester {
 		out.println("Deck, sorted with selection sort:");
 		testDeck.selectionSort();
 		out.println(testDeck+ "\n");
-//		
-//		testDeck.mergeSort(1, 51);
-//		out.println(testDeck + "\n");
+		
+		testDeck.mergeSort(testDeck.getDeck());
+		out.println(testDeck + "\n");
 
 		out.println("Deck, attempted deal");
 		Deck[] deckArr = testDeck.deal(2, 3); //could not figure out how to actually print deck
