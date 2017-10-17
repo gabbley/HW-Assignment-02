@@ -89,7 +89,11 @@ public class Deck {
 
 		String deckStr = "";
 
+<<<<<<< HEAD
 		if (topCard == DECKSIZE) {
+=======
+		if (topCard == FULLDECK-1) {
+>>>>>>> branch 'master' of https://github.com/gabbley/HW-Assignment-02.git
 			for (int rank = 0; rank < NUMRANKS; rank++) {
 				for (int suit = 0; suit < NUMSUITS; suit++) {
 					deckStr += deck[suit * NUMRANKS + rank] + "\t";
