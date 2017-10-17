@@ -154,7 +154,7 @@ public class Deck {
 	 */
 	public Deck[] deal(int hands, int cardsPerHand) {
 
-		if (topCard < (hands * cardsPerHand))
+		if (topCard < (hands * cardsPerHand) || topCard <= 0)
 			return null;
 
 		Deck[] allHands = new Deck[hands];
@@ -166,8 +166,9 @@ public class Deck {
 		for (int ca = 0; ca < cardsPerHand; ca++) {
 			for (int h = 0; h < hands; h++) {
 				Card replaceCard = new Card(deck[topCard]);
-				allHands[h].deck[ca] = replaceCard; // poss copy constructor
+				allHands[h].deck[ca] = replaceCard;
 			}
+
 		}
 
 		return allHands;
@@ -196,11 +197,11 @@ public class Deck {
 		// Note: throws NullPointerException
 
 		if (topCard > 0) {
-			for (int n = topCard; n > 1; n--) {
+			for (int n = topCard + 1; n > 1; n--) {
 				int maxPos = 0;
 				for (int i = 1; i < n; i++) {
-					if (deck[i].compareTo(deck[maxPos]) > 0) { // error with
-																// compareTo?
+					if (deck[i].compareTo(deck[maxPos]) > 0) {
+
 						maxPos = i;
 					}
 				}
@@ -214,42 +215,44 @@ public class Deck {
 		}
 
 	}
-	
-	
+
 	/**
 	 * Sorts deck by suit and rank using Selection Sort Algorithm
 	 * 
-	 * @param deck of cards to be sorted
+	 * @param deck
+	 *            of cards to be sorted
 	 */
-	public static void mergeSort(Card[] d) {
-		Card[] temp = new Card[d.length];
-		recursiveSort(d, 0, d.length - 1, temp);
+	public void mergeSort() {
+		Card[] temp = new Card[topCard];
+		recursiveSort(deck, 0, topCard - 1, temp);
 	}
 
 	/**
 	 * Merges unsorted elements into one array in sorted order
 	 * 
-	 * @param d 
-	 * 		deck of cards
+	 * @param d
+	 *            deck of cards
 	 * @param from
-	 * 		index starting from
+	 *            index starting from
 	 * @param middle
-	 * 		middle index
+	 *            middle index
 	 * @param to
-	 * 		index going towards
+	 *            index going towards
 	 * @param temp
-	 * 		to copy over cards, store temporarily
+	 *            to copy over cards, store temporarily
 	 */
-	private static void merge(Card[] d, int from, int middle, int to, Card[] temp) {
-		int i = from, j = middle + 1, k = from;
+	private void merge(int from, int middle, int to, Card[] temp) {
+		int i = from;
+		int j = middle + 1;
+		int k = from;
 
 		// While both arrays have elements left unprocessed:
 		while (i <= middle && j <= to) {
-			if (d[i].compareTo(d[j]) <= -1) {
-				temp[k] = d[i]; // Or simply temp[k] = a[i++];
+			if (deck[i].compareTo(deck[j]) <= -1) {
+				temp[k] = deck[i]; // Or simply temp[k] = a[i++];
 				i++;
 			} else {
-				temp[k] = d[j];
+				temp[k] = deck[j];
 				j++;
 			}
 			k++;
@@ -257,35 +260,37 @@ public class Deck {
 
 		// Copy the tail of the first half, if any, into temp:
 		while (i <= middle) {
-			temp[k] = d[i]; // Or simply temp[k++] = a[i++]
+			temp[k] = deck[i]; // Or simply temp[k++] = a[i++]
 			i++;
 			k++;
 		}
 
 		// Copy the tail of the second half, if any, into temp:
 		while (j <= to) {
-			temp[k] = d[j]; // Or simply temp[k++] = a[j++]
+			temp[k] = deck[j]; // Or simply temp[k++] = a[j++]
 			j++;
 			k++;
 		}
 
 		// Copy temp back into a
 		for (k = from; k <= to; k++)
-			d[k] = temp[k];
+			deck[k] = temp[k];
 	}
+
 	/**
 	 * Recursively merges elements together until sorted
 	 * 
-	 * @param d 
-	 * 		deck of cards
+	 * @param d
+	 *            deck of cards
 	 * @param from
-	 * 		index starting from
+	 *            index starting from
 	 * @param to
-	 * 		index going towards
+	 *            index going towards
 	 * @param temp
-	 * 		to copy over cards, store temporarily
+	 *            to copy over cards, store temporarily
 	 */
-	private static void recursiveSort(Card[] d, int from, int to, Card[] temp) {
+	private void recursiveSort(Card[] d, int from, int to, Card[] temp) {
+		// to = topCard;
 		if (to - from < 2) {
 			if (to > from && d[to].compareTo(d[from]) <= -1) {
 				// swap a[to] and a[from]
@@ -297,7 +302,7 @@ public class Deck {
 			int middle = (from + to) / 2;
 			recursiveSort(d, from, middle, temp);
 			recursiveSort(d, middle + 1, to, temp);
-			merge(d, from, middle, to, temp);
+			merge(from, middle, to, temp);
 		}
 	}
 
