@@ -77,6 +77,7 @@ public class CardTester {
 		Deck[] deckArrBig = testDeck.deal(4, 200); 
 		out.println("Should be null -> " + deckArrBig + "\n");
 		
+		out.println("Deck, 2 hands, 10 cards per");
 		testDeck.shuffle();
 		Deck[] deckArr = testDeck.deal(2, 10); //2 hands, 10 cards per
 		for (int i = 0; i < deckArr.length; i++) {

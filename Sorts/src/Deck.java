@@ -89,7 +89,7 @@ public class Deck {
 
 		String deckStr = "";
 
-		if (topCard == DECKSIZE) {
+		if (topCard == DECKSIZE-1) {
 
 			for (int rank = 0; rank < NUMRANKS; rank++) {
 				for (int suit = 0; suit < NUMSUITS; suit++) {
@@ -321,7 +321,7 @@ public class Deck {
 					deck[i] = new Card(suit, rank);
 					i++;
 				}
-			} // help
+			} 
 		}
 		if (sorted != true)
 			shuffle();
